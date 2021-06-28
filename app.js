@@ -31,6 +31,9 @@ app.get('/news', async (req, res) => {
     const data = await fetch_news()
     res.send(data)
 })
+app.get('*', (req, res) => {
+    res.send({ error: "wrong ur;" })
+});
 const port = process.env.PORT || 5000
 app.listen(port, (req, res) => {
     console.log("server started")
