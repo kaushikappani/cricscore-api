@@ -31,7 +31,7 @@ app.get('/news', async (req, res) => {
     const data = await fetch_news()
     res.send(data)
 })
-
-app.listen(5000, (req, res) => {
+const port = process.env.PORT || 5000
+app.listen(port, (req, res) => {
     console.log("server started")
 })
