@@ -73,9 +73,7 @@ const match_data = async (url) => {
             stats.push($(e).text())
         })
         if (name !== "") {
-            data.push({
-                name, stats
-            })
+            data["player" + name] = { name, stats }
         }
     })
     return data
