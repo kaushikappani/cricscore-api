@@ -100,7 +100,13 @@ const fetch_news = async () => {
     const $ = cherrio.load(html);
     $("div.cb-nws-lft-col div.cb-pos-rel").each((_, element) => {
         const elem = $(element);
-        const path = elem.find("img").attr("source") || elem.find("img").attr("src")
+        let path = ""
+        if (elem.find("img").attr("src") !== undefined) {
+            path = elem.find("img").attr("src").split("205x152")[0] + "500x500" + elem.find("img").attr("src").split("205x152")[1]
+        }
+        if (elem.find("img").attr("source") !== undefined) {
+            path = elem.find("img").attr("source").split("205x152")[0] + "500x500" + elem.find("img").attr("source").split("205x152")[1]
+        }
         const image = "https://www.cricbuzz.com" + path
         const title = elem.find("h2").text();
         const intro = elem.find("div.cb-nws-intr").text()
