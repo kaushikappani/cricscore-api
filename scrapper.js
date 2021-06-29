@@ -54,7 +54,9 @@ const match_data = async (url) => {
     const scores = $(".cb-col-scores").text();
     const recent = $("div.cb-min-rcnt").text();
     const mom = $("div.cb-mom-itm").text();
-    const meta = $("div.cb-nav-subhdr").text()
+    const meta = $("div.cb-nav-subhdr").text();
+    const summary = $("div.cb-min-stts").text();
+    data.summary = summary
     data.title = title
     data.meta = meta
     let commentry = [];
