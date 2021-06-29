@@ -84,9 +84,9 @@ const match_data = async (url) => {
 }
 const fetch_schedule = async () => {
     let data = []
-    const html = await html_fetch("https://www.cricbuzz.com/cricket-schedule/upcoming-series/international")
+    const html = await html_fetch("https://www.cricbuzz.com/cricket-schedule/upcoming-series/all")
     const $ = cherrio.load(html)
-    $("div#international-list div.cb-col-67.cb-col").each((_, element) => {
+    $("div#all-list div.cb-col-67.cb-col").each((_, element) => {
         const elem = $(element);
         const title = elem.find("div div span[itemprop='name']").attr("content")
         const date = elem.find("div div span[itemprop='startDate']").attr("content")
