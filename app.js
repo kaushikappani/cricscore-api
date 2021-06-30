@@ -4,7 +4,11 @@ var cors = require('cors')
 const { fetch_recent, fetch_live, match_data, fetch_schedule, fetch_news } = require("./scrapper");
 const app = express();
 app.use(express.static('public'))
-app.use(cors())
+var corsOptions = {
+    origin: 'http://example.com',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+app.use(cors(corsOptions))
 app.set('view engine', 'ejs')
 app.get("/", (req, res) => {
     res.send({
@@ -12,6 +16,7 @@ app.get("/", (req, res) => {
     })
 })
 app.get('/recent', async (req, res) => {
+    console.log(req.headers.host)
     const data = await fetch_recent()
     res.send(data)
 })
