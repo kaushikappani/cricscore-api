@@ -5,7 +5,7 @@ const { fetch_recent, fetch_live, match_data, fetch_schedule, fetch_news } = req
 const app = express();
 app.use(express.static('public'))
 var corsOptions = {
-    origin: 'http://example.com',
+    origin: 'https://cricketscores.netlify.app',
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 app.use(cors(corsOptions))
