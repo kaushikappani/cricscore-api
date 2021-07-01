@@ -68,16 +68,15 @@ const match_data = async (url) => {
     data.mom = mom
     data.scores = scores;
     let records = [];
-    $("div.cb-min-itm-rw").each((i, element) => {
+    $("div.cb-min-inf div.cb-col-100").each((i, element) => {
         const elem = $(element);
         let stats = []
-        const name = elem.find("a.cb-text-link").text()
+        let name = elem.find("a.cb-text-link").text()
         elem.find("div.text-right").each((_, e) => {
             stats.push($(e).text())
+            console.log($(e).text())
         })
-        if (name !== "") {
-            records.push({ name, stats })
-        }
+        records.push({ name, stats })
         data.records = records
     })
     return data
