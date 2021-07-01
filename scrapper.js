@@ -71,12 +71,11 @@ const match_data = async (url) => {
     $("div.cb-min-inf div.cb-col-100").each((i, element) => {
         const elem = $(element);
         let stats = []
-        let name = elem.find("a.cb-text-link").text()
-        elem.find("div.text-right").each((_, e) => {
+        elem.find("div.cb-col").each((_, e) => {
             stats.push($(e).text())
             console.log($(e).text())
         })
-        records.push({ name, stats })
+        records.push({ stats })
         data.records = records
     })
     return data
