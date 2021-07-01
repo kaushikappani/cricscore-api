@@ -73,7 +73,6 @@ const match_data = async (url) => {
         let stats = []
         elem.find("div.cb-col").each((_, e) => {
             stats.push($(e).text())
-            console.log($(e).text())
         })
         records.push({ stats })
         data.records = records
