@@ -108,12 +108,28 @@ const fetch_news = async () => {
         }
         const image = "https://www.cricbuzz.com" + path
         const title = elem.find("h2").text();
+        const link = elem.find("a").attr("href");
         const intro = elem.find("div.cb-nws-intr").text()
         const time = elem.find("span.cb-nws-time").text()
-        data.push({ image, title, intro, time })
+        data.push({ image, title, intro, time, link })
     })
     return data
 }
+const fetch_article = async (url) => {
+    const html = await html_fetch(url);
+    const $ = cherrio.load(html);
+    const title = $("h1[itemprop='headline']").text();
+    let body = [];
+    $("section[itemprop='articleBody']").each((_, e) => {
+        body.push($(e).text())
+    })
+    const subText = $("div.cb-nws-sub-txt").text()
+    const image = $("section[itemprop='image'] img").attr('src')
+    const date = $("time").attr('datetime')
+    let data = { title, body, image, subText, date: date.substring(0, 16) }
+    return data
+
+}
 module.exports = {
-    fetch_recent, fetch_live, match_data, fetch_schedule, fetch_news
+    fetch_recent, fetch_live, match_data, fetch_schedule, fetch_news, fetch_article
 }

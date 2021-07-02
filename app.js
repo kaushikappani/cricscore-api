@@ -1,7 +1,7 @@
 const express = require("express");
 const ejs = require("ejs");
 var cors = require('cors')
-const { fetch_recent, fetch_live, match_data, fetch_schedule, fetch_news } = require("./scrapper");
+const { fetch_recent, fetch_live, match_data, fetch_schedule, fetch_news, fetch_article } = require("./scrapper");
 const app = express();
 app.use(express.static('public'))
 var corsOptions = {
@@ -34,6 +34,11 @@ app.get('/schedule', async (req, res) => {
 })
 app.get('/news', async (req, res) => {
     const data = await fetch_news()
+    res.send(data)
+})
+app.get('/article', async (req, res) => {
+    console.log(req.query.url)
+    const data = await fetch_article(`https://www.cricbuzz.com/${req.query.url}`)
     res.send(data)
 })
 app.get('*', (req, res) => {
