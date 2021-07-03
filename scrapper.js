@@ -123,6 +123,7 @@ const fetch_news = async () => {
     "https://www.cricbuzz.com/cricket-news/latest-news"
   );
   const $ = cherrio.load(html);
+  let paginationUrl = $("div.ajax-pagination").attr("url");
   $("div.cb-nws-lft-col div.cb-pos-rel").each((_, element) => {
     const elem = $(element);
     let path = "";
@@ -145,7 +146,7 @@ const fetch_news = async () => {
     const time = elem.find("span.cb-nws-time").text();
     data.push({ image, title, intro, time, link });
   });
-  return data;
+  return { data, paginationUrl };
 };
 const fetch_article = async (url) => {
   const html = await html_fetch(url);
@@ -179,6 +180,37 @@ fetch_schedule_page = async (url) => {
   const page_3_url = $("div.ajax-pagination").attr("url");
   return { data, page_3_url };
 };
+
+const fetch_news_pagination = async (url) => {
+  let data = [];
+  const html = await html_fetch(`https://www.cricbuzz.com/${url}`);
+  const $ = cherrio.load(html);
+  let paginationUrl = $("div.ajax-pagination").attr("url");
+  $("div.cb-lst-itm").each((_, element) => {
+    const elem = $(element);
+    let path = "";
+    if (elem.find("img").attr("src") !== undefined) {
+      path =
+        elem.find("img").attr("src").split("205x152")[0] +
+        "500x500" +
+        elem.find("img").attr("src").split("205x152")[1];
+    }
+    if (elem.find("img").attr("source") !== undefined) {
+      path =
+        elem.find("img").attr("source").split("205x152")[0] +
+        "500x500" +
+        elem.find("img").attr("source").split("205x152")[1];
+    }
+    const image = "https://www.cricbuzz.com" + path;
+    const title = elem.find("h2").text();
+    const link = elem.find("a").attr("href");
+    const intro = elem.find("div.cb-nws-intr").text();
+    const time = elem.find("span.cb-nws-time").text();
+    data.push({ image, title, intro, time, link });
+  });
+  return { data, paginationUrl };
+};
+
 module.exports = {
   fetch_recent,
   fetch_live,
@@ -186,4 +218,5 @@ module.exports = {
   fetch_schedule,
   fetch_news,
   fetch_article,
+  fetch_news_pagination,
 };

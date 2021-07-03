@@ -9,6 +9,7 @@ const {
   fetch_schedule,
   fetch_news,
   fetch_article,
+  fetch_news_pagination,
 } = require("./scrapper");
 const app = express();
 app.use(express.static("public"));
@@ -16,7 +17,7 @@ var corsOptions = {
   origin: "https://cricketscores.netlify.app",
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
-app.use(cors(corsOptions));
+app.use(cors());
 app.set("view engine", "ejs");
 app.get("/", (req, res) => {
   res.send({
@@ -47,6 +48,10 @@ app.get("/news", async (req, res) => {
 app.get("/article", async (req, res) => {
   console.log(req.query.url);
   const data = await fetch_article(`https://www.cricbuzz.com/${req.query.url}`);
+  res.send(data);
+});
+app.get("/news/pagination", async (req, res) => {
+  const data = await fetch_news_pagination(req.query.url);
   res.send(data);
 });
 
