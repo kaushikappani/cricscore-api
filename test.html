@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>audio</title>
+</head>
+<body>
+    select Voices : <select name="" id="voice_List"></select>
+    <br>
+    <br>
+    <input type="text" id="text_input">
+    <button id="btn_speak">Speak !!!</button>
+</body>
+<script>
+    var voice_List= document.getElementById("voice_List");
+    var text_input = document.getElementById("text_input");
+    var btn = document.getElementById("btn_speak");
+
+    
+    var tts = window.speechSynthesis;
+    const get_voices = ()=>{
+        voices = tts.getVoices();
+        voice_List.innerHTML = "";
+        console.log(tts)
+        voices.forEach(e => {
+            var list_item = document.createElement("option");
+            list_item.textContent = e.name;
+            list_item.setAttribute("data-lang",e.lang);
+            list_item.setAttribute("data-name",e.name);
+            console.log(e)
+            voice_List.appendChild(list_item);
+        });
+        voice_List.selectedIndex = 0;
+    }
+    get_voices()
+    if(speechSynthesis !==undefined){
+        speechSynthesis.onvoiceschanged = get_voices
+    }
+    btn.addEventListener("click",()=>{
+        var to_speak = new SpeechSynthesisUtterance(text_input.value);
+        var selectedVoiceName =voice_List.selectedOptions[0].getAttribute('data-name');
+        voices.forEach(e=>{
+            if(e.name == selectedVoiceName){
+                to_speak.voice = e;
+            }
+        })
+        tts.speak(to_speak)
+    })
+</script>
+</html>
