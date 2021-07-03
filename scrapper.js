@@ -114,7 +114,8 @@ const fetch_schedule = async () => {
     data.push({ title, date, time, location });
   });
   let more_data = await fetch_schedule_page(pagination_url);
-  return [...data, ...more_data];
+  let page_3_data = await fetch_schedule_page(more_data.page_3_url);
+  return [...data, ...more_data.data, ...page_3_data.data];
 };
 const fetch_news = async () => {
   let data = [];
@@ -175,7 +176,8 @@ fetch_schedule_page = async (url) => {
     let item = { date, title, location, time };
     data.push(item);
   });
-  return data;
+  const page_3_url = $("div.ajax-pagination").attr("url");
+  return { data, page_3_url };
 };
 module.exports = {
   fetch_recent,
