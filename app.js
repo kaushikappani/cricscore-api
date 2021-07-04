@@ -14,10 +14,10 @@ const {
 const app = express();
 app.use(express.static("public"));
 var corsOptions = {
-  origin: ["https://cricketscores.netlify.app", "localhost:3000"],
+  origin: "https://cricketscores.netlify.app",
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
-app.use(cors(corsOptions));
+app.use(cors());
 app.set("view engine", "ejs");
 app.get("/", (req, res) => {
   res.send({
@@ -34,7 +34,7 @@ app.get("/live", async (req, res) => {
   res.send(data);
 });
 app.get("/live/match", async (req, res) => {
-  const data = await match_data(req.query.url);
+  const data = await match_data(`https://www.cricbuzz.com/${req.query.url}`);
   res.send(data);
 });
 app.get("/schedule", async (req, res) => {

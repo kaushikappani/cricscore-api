@@ -44,9 +44,7 @@ const fetch_live = async () => {
     const title = elem.find("h3").text();
     const date = elem.find("div.text-gray").html();
     const url = "https://www.cricbuzz.com" + elem.find("h3 a").attr("href");
-    const scorecard_url =
-      "https://www.cricbuzz.com" +
-      elem.find("nav a[title='Scorecard']").attr("href");
+    const scorecard_url = elem.find("nav a[title='Scorecard']").attr("href");
     const meta_text = elem.find("div.text-gray").text();
     const score =
       elem.find(".cb-lv-scrs-well-live").text() ||
@@ -210,6 +208,9 @@ const fetch_news_pagination = async (url) => {
   });
   return { data, paginationUrl };
 };
+
+var b = Buffer.alloc(10);
+console.log(b);
 
 module.exports = {
   fetch_recent,
