@@ -17,10 +17,8 @@ const fetch_recent = async () => {
     const elem = $(element);
     const title = elem.find("h3").text();
     const date = elem.find("div.text-gray").html();
-    const url = "https://www.cricbuzz.com" + elem.find("h3 a").attr("href");
-    const scorecard_url =
-      "https://www.cricbuzz.com" +
-      elem.find("nav a[title='Scorecard']").attr("href");
+    const url = elem.find("h3 a").attr("href");
+    const scorecard_url = elem.find("nav a[title='Scorecard']").attr("href");
     const meta_text = elem.find("div.text-gray").text();
     const score = elem.find(".cb-lv-scrs-well-complete").text();
     data.push({
