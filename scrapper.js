@@ -92,14 +92,13 @@ const match_data = async (url) => {
   });
   return data;
 };
-const fetch_schedule = async () => {
+const fetch_schedule = async (url) => {
+  console.log(url);
   let data = [];
-  const html = await html_fetch(
-    "https://www.cricbuzz.com/cricket-schedule/upcoming-series/international"
-  );
+  const html = await html_fetch(`https://www.cricbuzz.com${url}`);
   const $ = cherrio.load(html);
   const pagination_url = $("div.ajax-pagination").attr("url");
-  $("div#international-list div.cb-col-67.cb-col").each((_, element) => {
+  $("div.cb-col-67.cb-col").each((_, element) => {
     const elem = $(element);
     const title = elem.find("div div span[itemprop='name']").attr("content");
     const date = elem
@@ -107,11 +106,10 @@ const fetch_schedule = async () => {
       .attr("content");
     const time = elem.find("div.cb-mtchs-dy-tm").text();
     const location = elem.find("div[itemprop='location']").text();
+
     data.push({ title, date, time, location });
   });
-  let more_data = await fetch_schedule_page(pagination_url);
-  let page_3_data = await fetch_schedule_page(more_data.page_3_url);
-  return [...data, ...more_data.data, ...page_3_data.data];
+  return { data, pagination_url };
 };
 const fetch_news = async () => {
   let data = [];
@@ -159,24 +157,6 @@ const fetch_article = async (url) => {
   return data;
 };
 
-fetch_schedule_page = async (url) => {
-  let data = [];
-  const html = await html_fetch(`https://www.cricbuzz.com/${url}`);
-  const $ = cherrio.load(html);
-  $("div.cb-col-67.cb-col").each((_, e) => {
-    const date = $(e)
-      .find("div div span[itemprop='startDate']")
-      .attr("content");
-    const title = $(e).find("span[itemprop='name']").attr("content");
-    const location = $(e).find("div[itemprop='location']").text();
-    const time = $(e).find("div.cb-mtchs-dy-tm").text();
-    let item = { date, title, location, time };
-    data.push(item);
-  });
-  const page_3_url = $("div.ajax-pagination").attr("url");
-  return { data, page_3_url };
-};
-
 const fetch_news_pagination = async (url) => {
   let data = [];
   const html = await html_fetch(`https://www.cricbuzz.com/${url}`);
@@ -206,9 +186,6 @@ const fetch_news_pagination = async (url) => {
   });
   return { data, paginationUrl };
 };
-
-var b = Buffer.alloc(10);
-console.log(b);
 
 module.exports = {
   fetch_recent,

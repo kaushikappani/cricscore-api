@@ -38,7 +38,7 @@ app.get("/live/match", async (req, res) => {
   res.send(data);
 });
 app.get("/schedule", async (req, res) => {
-  const data = await fetch_schedule();
+  const data = await fetch_schedule(req.query.url);
   res.send(data);
 });
 app.get("/news", async (req, res) => {
@@ -46,7 +46,6 @@ app.get("/news", async (req, res) => {
   res.send(data);
 });
 app.get("/article", async (req, res) => {
-  console.log(req.query.url);
   const data = await fetch_article(`https://www.cricbuzz.com/${req.query.url}`);
   res.send(data);
 });
