@@ -118,6 +118,7 @@ const fetch_news = async () => {
   let paginationUrl = $("div.ajax-pagination").attr("url");
   $("div.cb-nws-lft-col div.cb-pos-rel").each((_, element) => {
     const elem = $(element);
+
     let path = "";
     if (elem.find("img").attr("src") !== undefined) {
       path =
@@ -136,7 +137,10 @@ const fetch_news = async () => {
     const link = elem.find("a").attr("href");
     const intro = elem.find("div.cb-nws-intr").text();
     const time = elem.find("span.cb-nws-time").text();
-    data.push({ image, title, intro, time, link });
+    let type = elem.find("div.cb-nws-time").text();
+    if (!type.includes("CRICBUZZ PLUS")) {
+      data.push({ image, title, intro, time, link });
+    }
   });
   return { data, paginationUrl };
 };
