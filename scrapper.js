@@ -113,9 +113,7 @@ const fetch_schedule = async (url) => {
 };
 const fetch_news = async () => {
   let data = [];
-  const html = await html_fetch(
-    "https://www.cricbuzz.com/cricket-news/latest-news"
-  );
+  const html = await html_fetch("https://www.cricbuzz.com/cricket-news");
   const $ = cherrio.load(html);
   let paginationUrl = $("div.ajax-pagination").attr("url");
   $("div.cb-nws-lft-col div.cb-pos-rel").each((_, element) => {
