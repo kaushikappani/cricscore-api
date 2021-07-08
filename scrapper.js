@@ -184,7 +184,10 @@ const fetch_news_pagination = async (url) => {
     const link = elem.find("a").attr("href");
     const intro = elem.find("div.cb-nws-intr").text();
     const time = elem.find("span.cb-nws-time").text();
-    data.push({ image, title, intro, time, link });
+    let type = elem.find("div.cb-nws-time").text();
+    if (!type.includes("CRICBUZZ PLUS")) {
+      data.push({ image, title, intro, time, link });
+    }
   });
   return { data, paginationUrl };
 };
