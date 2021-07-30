@@ -1,6 +1,5 @@
 const axios = require("axios");
 const cherrio = require("cheerio");
-const { text } = require("cheerio/lib/api/manipulation");
 
 const html_fetch = async (url) => {
   const response = await axios.get(url);
@@ -153,8 +152,10 @@ const fetch_article = async (url) => {
     body.push($(e).text());
   });
   const subText = $("div.cb-nws-sub-txt").text();
-  const image = $("section[itemprop='image'] img").attr("src");
-  const date = $("time").attr("datetime");
+  const image =
+    $("section[itemprop='image'] img").attr("src") ||
+    $("section[itemprop='articleBody'] img").attr("src");
+  const date = $("time").attr("datetime") || "";
   let data = { title, body, image, subText, date: date.substring(0, 16) };
   return data;
 };
