@@ -180,7 +180,7 @@ const fetch_news_pagination = async (url) => {
         "500x500" +
         elem.find("img").attr("source").split("205x152")[1];
     }
-    const image = "https://www.cricbuzz.com" + path;
+    const image =  path;
     const title = elem.find("h2").text();
     const link = elem.find("a").attr("href");
     const intro = elem.find("div.cb-nws-intr").text();
