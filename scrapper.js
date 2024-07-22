@@ -137,7 +137,7 @@ const fetch_news = async () => {
     const intro = elem.find("div.cb-nws-intr").text();
     const time = elem.find("span.cb-nws-time").text();
     let type = elem.find("div.cb-nws-time").text();
-    if (!type.includes("CRICBUZZ PLUS") && !data.some(item => item.title === title)) {
+    if (!type.includes("CRICBUZZ PLUS") && !data.some(item => item.link === link)) {
       data.push({ image, title, intro, time, link });
     }
   });
@@ -186,7 +186,7 @@ const fetch_news_pagination = async (url) => {
     const intro = elem.find("div.cb-nws-intr").text();
     const time = elem.find("span.cb-nws-time").text();
     let type = elem.find("div.cb-nws-time").text();
-    if (!type.includes("CRICBUZZ PLUS") && !data.some(item => item.title === title)) {
+    if (!type.includes("CRICBUZZ PLUS") && !data.some(item => item.link === link)) {
       data.push({ image, title, intro, time, link });
     }
   });
