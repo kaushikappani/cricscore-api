@@ -2,20 +2,13 @@ const express = require("express");
 const ejs = require("ejs");
 var cors = require("cors");
 const rssToJson = require("rss-in-json");
-const {
-  fetch_recent,
-  fetch_live,
-  match_data,
-  fetch_schedule,
-  fetch_news,
-  fetch_article,
-  fetch_news_pagination,
+const {fetch_recent,fetch_live,match_data,fetch_schedule,fetch_news,fetch_article,fetch_news_pagination,
 } = require("./scrapper");
 const app = express();
 app.use(express.static("public"));
 var corsOptions = {
   origin: "https://cricketscores.netlify.app",
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  optionsSuccessStatus: 200,
 };
 app.use(cors());
 app.set("view engine", "ejs");
@@ -55,9 +48,9 @@ app.get("/news/pagination", async (req, res) => {
 });
 
 app.get("*", (req, res) => {
-  res.send({ error: "wrong ur;" });
+  res.send({ error: "wrong url" });
 });
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 app.listen(port, (req, res) => {
   console.log("server started");
 });
